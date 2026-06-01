@@ -40,13 +40,19 @@ MODEL_PATH = os.getenv("MODEL_PATH", "dosha_model.pkl")
 model = None
 feature_columns = None
 
-@app.on_event("startup")
-async def load_model():
+# Avoid loading the ML model during startup to keep boot fast on platforms
+# with strict proxy timeouts (e.g., Railway free plan). Load lazily on first
+# request so the server can start immediately and the CORS middleware runs.
+
+def ensure_model_loaded():
+    """Load model artifacts on first use. Non-async to keep predict handler simple."""
     global model, feature_columns
+    if model is not None:
+        return
     try:
         artifacts = joblib.load(MODEL_PATH)
-        model = artifacts["model"]
-        feature_columns = artifacts["feature_columns"]
+        model = artifacts.get("model")
+        feature_columns = artifacts.get("feature_columns")
         print(f"Model and feature columns loaded from {MODEL_PATH}")
     except Exception as e:
         print(f"Warning: Could not load model: {e}")
@@ -267,6 +273,9 @@ def get_key_traits(data: AssessmentInput, primary_dosha: str) -> list[str]:
 @app.post("/predict", response_model=PredictionResponse)
 async def predict_dosha(data: AssessmentInput):
     try:
+        # Ensure the model is available; loads on first request to avoid slow startup
+        ensure_model_loaded()
+
         if model is not None:
             X = encode_input(data)
             probs = model.predict_proba(X)[0]
@@ -278,6 +287,7 @@ async def predict_dosha(data: AssessmentInput):
             secondary_dosha = DOSHA_LABELS.get(int(sorted_idx[1]), "Pitta")
             secondary_confidence = float(probs[sorted_idx[1]])
         else:
+            # Model failed to load — fall back to rule-based predictor
             primary_dosha, confidence, secondary_dosha, secondary_confidence = rule_based_predict(data)
 
         key_traits = get_key_traits(data, primary_dosha)

@@ -1,4 +1,3 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
@@ -7,18 +6,11 @@ import { QUESTIONS, type AssessmentAnswers } from "@/lib/dosha";
 import { predictDosha } from "@/lib/api";
 import { saveAssessment } from "@/lib/appwrite";
 
-export const Route = createFileRoute("/assessment")({
-  head: () => ({
-    meta: [
-      { title: "Assessment · AyurvedaAI" },
-      { name: "description", content: "Answer 11 short questions to discover your dominant Dosha." },
-    ],
-  }),
-  component: Assessment,
-});
+interface AssessmentProps {
+  onNavigate: (page: string, state?: any) => void;
+}
 
-function Assessment() {
-  const navigate = useNavigate();
+export default function Assessment({ onNavigate }: AssessmentProps) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Partial<AssessmentAnswers>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -56,10 +48,7 @@ function Assessment() {
         console.warn("Appwrite save failed:", e);
       }
 
-      navigate({
-        to: "/results",
-        state: { result, answers: fullAnswers, source, error, savedDocId } as never,
-      });
+      onNavigate("results", { result, answers: fullAnswers, source, error, savedDocId });
     } catch (e) {
       console.error("Assessment submission failed:", e);
       setSubmitting(false);
@@ -67,7 +56,7 @@ function Assessment() {
   }
 
   return (
-    <PageShell>
+    <PageShell onNavigate={onNavigate}>
       <section className="mx-auto max-w-2xl px-6 pt-6 pb-20">
         <div className="mb-6">
           <div className="flex justify-between text-xs text-muted-foreground mb-2">

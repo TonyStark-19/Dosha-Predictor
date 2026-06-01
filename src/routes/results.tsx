@@ -1,4 +1,3 @@
-import { createFileRoute, Link, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Check, RotateCcw, Sparkles, AlertCircle, Share2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
@@ -11,41 +10,26 @@ import {
   type PredictionResult,
 } from "@/lib/dosha";
 
-interface ResultsState {
+interface ResultsProps {
   result?: PredictionResult;
   answers?: Partial<AssessmentAnswers>;
-  source?: "api" | "local";
-  error?: string;
-  savedDocId?: string;
+  onNavigate: (page: string) => void;
 }
 
-export const Route = createFileRoute("/results")({
-  head: () => ({
-    meta: [
-      { title: "Your Dosha · AyurvedaAI" },
-      { name: "description", content: "Your personalized Ayurvedic Dosha result and wellness recommendations." },
-    ],
-  }),
-  component: Results,
-});
-
-function Results() {
-  const state = useRouterState({ select: (s) => s.location.state as ResultsState });
-  const result = state?.result;
-  const answers = state?.answers ?? {};
+export default function Results({ result, answers = {}, onNavigate }: ResultsProps) {
 
   if (!result) {
     return (
-      <PageShell>
+      <PageShell onNavigate={onNavigate}>
         <section className="mx-auto max-w-xl px-6 py-20 text-center">
           <h1 className="font-display text-4xl">No result yet</h1>
           <p className="mt-3 text-muted-foreground">Take the assessment to see your Dosha.</p>
-          <Link
-            to="/assessment"
+          <button
+            onClick={() => onNavigate("assessment")}
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-accent-foreground font-medium"
           >
             Start assessment
-          </Link>
+          </button>
         </section>
       </PageShell>
     );
@@ -59,33 +43,9 @@ function Results() {
   const localTraits = topTraits(answers, primary, 4);
 
   return (
-    <PageShell>
+    <PageShell onNavigate={onNavigate}>
       <section className="mx-auto max-w-5xl px-6 pt-6 pb-24">
-        {state?.source === "local" && (
-          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-amber-300/30 bg-amber-200/5 p-4 text-sm">
-            <AlertCircle className="h-4 w-4 mt-0.5 text-amber-300 shrink-0" />
-            <div>
-              <div className="font-medium text-amber-200">Using local fallback scoring</div>
-              <div className="text-muted-foreground">
-                The FastAPI backend wasn't reachable
-                {state.error ? <> — <span className="font-mono">{state.error}</span></> : null}.
-                Set <span className="font-mono">VITE_API_URL</span> to your deployed model URL.
-              </div>
-            </div>
-          </div>
-        )}
-
-        {state?.source === "api" && (
-          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-400/30 bg-emerald-300/5 p-4 text-sm">
-            <CheckCircle2 className="h-4 w-4 mt-0.5 text-emerald-400 shrink-0" />
-            <div>
-              <div className="font-medium text-emerald-200">ML model prediction</div>
-              <div className="text-muted-foreground">
-                Result powered by the XGBoost model trained on 5,000+ Ayurvedic profiles.
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Result alerts removed for simplification */}
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -166,13 +126,13 @@ function Results() {
             for health concerns.
           </p>
           <div className="flex items-center gap-3">
-            {state?.savedDocId && <ShareButton />}
-            <Link
-              to="/assessment"
+            <ShareButton />
+            <button
+              onClick={() => onNavigate("assessment")}
               className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm hover:bg-white/5"
             >
               <RotateCcw className="h-4 w-4" /> Retake assessment
-            </Link>
+            </button>
           </div>
         </div>
       </section>

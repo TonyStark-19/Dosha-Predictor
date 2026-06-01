@@ -1,21 +1,37 @@
-import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Leaf } from "lucide-react";
 import type { ReactNode } from "react";
 
-export function PageShell({ children }: { children: ReactNode }) {
+interface PageShellProps {
+  children: ReactNode;
+  onNavigate?: (page: string) => void;
+}
+
+export function PageShell({ children, onNavigate }: PageShellProps) {
+  const handleLogoClick = () => {
+    if (onNavigate) {
+      onNavigate("landing");
+    } else {
+      // Fallback: reload page
+      window.location.href = "/";
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-30">
         <div className="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group">
+          <button
+            onClick={handleLogoClick}
+            className="flex items-center gap-2 group hover:opacity-80 transition-opacity"
+          >
             <span className="grid place-items-center h-9 w-9 rounded-xl glass">
               <Leaf className="h-4 w-4 text-accent" />
             </span>
             <span className="font-display text-lg tracking-tight">
               Ayurveda<span className="text-accent">AI</span>
             </span>
-          </Link>
+          </button>
           <span className="text-xs text-muted-foreground hidden sm:block">
             Educational wellness tool — not medical advice
           </span>

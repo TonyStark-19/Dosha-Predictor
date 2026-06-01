@@ -8,7 +8,7 @@ interface LandingProps {
 
 export default function Landing({ onNavigate }: LandingProps) {
   return (
-    <PageShell onNavigate={onNavigate}>
+    <PageShell>
       <section className="mx-auto max-w-6xl px-6 pt-10 pb-20">
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
           <div>

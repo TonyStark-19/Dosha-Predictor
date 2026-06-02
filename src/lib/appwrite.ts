@@ -3,8 +3,8 @@ import type { AssessmentAnswers } from "./dosha";
 
 const client = new Client()
   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT as string)
-  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID as string);
-
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID as string)
+  .setKey(import.meta.env.VITE_APPWRITE_API_KEY as string); 
 const databases = new Databases(client);
 
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID as string;

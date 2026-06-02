@@ -1,11 +1,19 @@
-import { Client, Databases, ID } from "appwrite";
+import { Client, Databases, ID, Account } from "appwrite";
 import type { AssessmentAnswers } from "./dosha";
 
 const client = new Client()
   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT as string)
-  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID as string)
-  .setKey(import.meta.env.VITE_APPWRITE_API_KEY as string);
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID as string);
+
+const account = new Account(client);
 const databases = new Databases(client);
+
+// Create anonymous session on first load
+try {
+  await account.createAnonymousSession();
+} catch {
+  // Session might already exist
+}
 
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID as string;
 const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID as string;

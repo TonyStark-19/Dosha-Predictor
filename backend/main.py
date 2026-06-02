@@ -8,7 +8,7 @@ import pandas as pd
 from typing import Optional
 import os
 
-app = FastAPI(title="AyurvedaAI API", version="1.0.0")
+app = FastAPI(title="Dosha Prediction AI API", version="1.0.0")
 
 # CORS: allow all origins. Do NOT combine allow_origins=["*"] with
 # allow_credentials=True — the CORS spec forbids that combination and
@@ -315,4 +315,4 @@ async def health():
 
 @app.get("/")
 async def root():
-    return {"message": "AyurvedaAI API", "version": "1.0.0"}
+    return {"message": "Dosha Prediction AI API", "version": "1.0.0"}

@@ -1,5 +1,6 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "dosha-prediction-ai",
+  "description": "AI-powered Ayurvedic Dosha prediction with personalized wellness guidance",
   "private": true,
   "sideEffects": false,
   "type": "module",

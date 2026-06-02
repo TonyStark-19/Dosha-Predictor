@@ -121,7 +121,7 @@ export default function Results({ result, answers = {}, onNavigate }: ResultsPro
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground max-w-lg">
-            AyurvedaAI is an educational wellness tool. It does not provide
+            Dosha Prediction AI is an educational wellness tool. It does not provide
             medical diagnosis or treatment. Consult a qualified practitioner
             for health concerns.
           </p>

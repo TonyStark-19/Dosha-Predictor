@@ -29,7 +29,7 @@ export function PageShell({ children, onNavigate }: PageShellProps) {
               <Leaf className="h-4 w-4 text-accent" />
             </span>
             <span className="font-display text-lg tracking-tight">
-              Ayurveda<span className="text-accent">AI</span>
+              Dosha<span className="text-accent">Predict</span>
             </span>
           </button>
           <span className="text-xs text-muted-foreground hidden sm:block">
@@ -46,7 +46,7 @@ export function PageShell({ children, onNavigate }: PageShellProps) {
         {children}
       </motion.main>
       <footer className="mx-auto max-w-6xl w-full px-6 py-8 text-xs text-muted-foreground">
-        © {new Date().getFullYear()} AyurvedaAI · Ancient wisdom, modern intelligence
+        © {new Date().getFullYear()} Dosha Prediction AI · Ancient wisdom, modern intelligence
       </footer>
     </div>
   );

@@ -1,11 +1,11 @@
-# AyurvedaAI 🌿
+# Dosha Prediction AI 🌿
 
-AI-powered Ayurvedic Dosha prediction app using XGBoost + FastAPI + React.
+AI-powered Ayurvedic Dosha prediction app using XGBoost + FastAPI + React. Discover your unique constitution and receive personalized wellness guidance.
 
 ## Project Structure
 
 ```
-ayurveda-ai/
+dosha-prediction-ai/
 ├── backend/
 │   ├── main.py           # FastAPI app + prediction engine
 │   ├── model.pkl         # Your trained XGBoost model ← PUT IT HERE
@@ -69,7 +69,7 @@ curl -X POST http://localhost:8000/predict \
 2. Set root directory to `backend/`
 3. Add environment variable: `MODEL_PATH=model.pkl`
 4. Railway will auto-detect `Procfile` and deploy
-5. Note your Railway URL (e.g. `https://ayurveda-backend.up.railway.app`)
+5. Note your Railway URL (e.g. `https://dosha-backend.up.railway.app`)
 
 > **Important:** Your `model.pkl` must be committed to the repo, or uploaded via Railway's volume storage.
 

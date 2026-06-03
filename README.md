@@ -1,6 +1,22 @@
 # Dosha Prediction AI 🌿
 
-AI-powered Ayurvedic Dosha prediction app using XGBoost + FastAPI + React. Discover your unique constitution and receive personalized wellness guidance.
+> AI-powered Ayurvedic Dosha prediction app using XGBoost + FastAPI + React. Discover your unique constitution and receive personalized wellness guidance.
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-doshapredictor.vercel.app-brightgreen?style=for-the-badge&logo=vercel)](https://doshapredictor.vercel.app/)
+[![Kaggle Notebook](https://img.shields.io/badge/Kaggle-ML%20Notebook-blue?style=for-the-badge&logo=kaggle)](https://www.kaggle.com/code/csxark/classifier-model-for-dosha-assessment)
+[![GitHub](https://img.shields.io/badge/GitHub-csxark%2FDosha--Predictor-black?style=for-the-badge&logo=github)](https://github.com/csxark/Dosha-Predictor)
+
+---
+
+## 🔗 Links
+
+| Resource | Link |
+|----------|------|
+| 🚀 Live App | [doshapredictor.vercel.app](https://doshapredictor.vercel.app/) |
+| 📓 Kaggle Notebook | [classifier-model-for-dosha-assessment](https://www.kaggle.com/code/csxark/classifier-model-for-dosha-assessment) |
+| 💻 GitHub Repository | [csxark/Dosha-Predictor](https://github.com/csxark/Dosha-Predictor) |
+
+---
 
 ## Project Structure
 
@@ -102,6 +118,7 @@ npm run dev
 ```
 
 ### Environment variables
+
 ```
 VITE_API_URL=https://your-railway-backend.up.railway.app
 VITE_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
@@ -136,19 +153,6 @@ def encode_input(data: AssessmentInput) -> pd.DataFrame:
     return df_encoded
 ```
 
----
-
-## Analytics
-
-Visit `/analytics` to see the hidden admin dashboard with:
-- Total assessments
-- Dosha distribution charts
-- 7-day trend line
-- Average confidence score
-
-If Appwrite is not configured, it shows realistic mock data.
-
----
 
 ## Tech Stack
 
